@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ setToasterData }) {
 
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
@@ -11,8 +11,11 @@ export default function Login() {
     const handleLogin = (event) => {
         event.preventDefault();
         if (username !== "bharatagri" || password !== "1234")
-            console.log("incorrect")
-        else navigate("/home");
+            setToasterData({ type: "error", msg: "Incorrect credentials" })
+        else {
+            setToasterData({ type: "success", msg: "Login Successful" })
+            navigate("/home");
+        }
     }
 
     return (

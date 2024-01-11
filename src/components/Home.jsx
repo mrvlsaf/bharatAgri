@@ -7,7 +7,7 @@ import CropCraze from "../assets/CropCraze.svg";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ setToasterData }) {
   const navigate = useNavigate();
   const [cropData, setCropData] = useState([]);
   const [modalData, setModalData] = useState();
@@ -21,9 +21,6 @@ export default function Home() {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % cropData.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
@@ -33,7 +30,7 @@ export default function Home() {
         setCropData(res.data.data);
       })
       .catch(err => {
-        console.log(err)
+        setToasterData({ type: "error", msg: "Something went wrong!" })
       })
   }, [])
 
@@ -60,7 +57,7 @@ export default function Home() {
 
       <div className='crop-outer-container'>
         <div className='crop-head-cont'>
-          <div>Types of Crops</div>
+          <div className="type-head">Types of Crops</div>
           <div class="search-wrapper">
             <input
               value={searchQuery}
